@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ivory: #F9F6EF;
+  --color-cream: #F5F0E7;
+  --color-sandstone: #D8C9AD;
+  --color-sage: #A8B99A;
+  --color-coral: #E9A18A;
+  --color-butter: #F2D58A;
+  --color-pebble: #B9A17D;
+  --color-pebble-dark: #8B7355;
+  --color-earth: #6B5B3E;
+
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: #F9F6EF;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  color: #6B5B3E;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-height: 100svh;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Playfair Display', Georgia, serif;
+  color: #3D2F1F;
+  line-height: 1.2;
+}
+
+/* Font utility class - Playfair Display for display text */
+.font-display {
+  font-family: 'Playfair Display', Georgia, serif !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F5F0E7;
+}
+::-webkit-scrollbar-thumb {
+  background: #B9A17D;
+  border-radius: 3px;
+}
+
+/* Selection */
+::selection {
+  background: rgba(242, 213, 138, 0.4);
+  color: #3D2F1F;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
