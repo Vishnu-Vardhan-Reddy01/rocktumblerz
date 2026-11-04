@@ -158,6 +158,7 @@ export default function ParentsSection() {
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
             >
               <ParentScene width={420} height={260} className="w-full max-w-md drop-shadow-sm" />
+              
             </motion.div>
           </FadeIn>
         </div>

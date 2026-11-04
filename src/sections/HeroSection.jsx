@@ -1,181 +1,169 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'motion/react';
-import { HeroIllustration, TinyLeaf, TinyFlower } from '../components/Illustrations';
+import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
+import WaveBackground from '../components/WaveBackground';
 
-// Floating decorative element
-function FloatingDecor({ children, delay = 0, amplitude = 12, className = "" }) {
-  return (
-    <motion.div
-      className={className}
-      animate={{
-        y: [0, -amplitude, 0],
-        rotate: [-2, 2, -2],
-      }}
-      transition={{
-        duration: 4 + delay,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay,
-      }}
-    >
-      {children}
-    </motion.div>
-  );
-}
+const EASE = [0.22, 1, 0.36, 1];
+
+const HEADLINE = [
+  { text: 'Little hands.', accent: false },
+  { text: 'Big discoveries.', accent: true },
+  { text: 'Endless possibilities.', accent: false },
+];
+
+const VALUES = ['Nature-led', 'Creative play', 'Sensory-rich', 'Toddler-first'];
 
 export default function HeroSection() {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const illustrationY = useTransform(scrollYProgress, [0, 1], [0, -60]);
-  const textY = useTransform(scrollYProgress, [0, 1], [0, 80]);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const reduceMotion = useReducedMotion();
+
+  // One quiet scroll effect: the image drifts up slightly as you scroll away.
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  const imageY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : -40]);
+
+  // Single orchestrated page-load sequence. Skipped for reduced-motion users.
+  const enter = (delay = 0, y = 16) =>
+    reduceMotion
+      ? {}
+      : {
+          initial: { opacity: 0, y },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.7, delay, ease: EASE },
+        };
 
   return (
     <section
       id="home"
       ref={ref}
-      className="relative min-h-screen flex flex-col overflow-hidden bg-[#F9F6EF]"
+      aria-labelledby="hero-heading"
+      className="relative overflow-hidden bg-[#F9F6EF]"
     >
-      {/* Subtle background texture rings */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/4 w-[900px] h-[900px] rounded-full border border-[#D8C9AD]/20" />
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/4 w-[650px] h-[650px] rounded-full border border-[#D8C9AD]/15" />
+      <WaveBackground />
+      {/* Static, soft background tone — no movement */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-40 -right-40 h-[520px] w-[520px] rounded-full bg-[#E9A18A]/10 blur-3xl" />
+        <div className="absolute -bottom-32 -left-32 h-[460px] w-[460px] rounded-full bg-[#A8B99A]/12 blur-3xl" />
       </div>
 
-      {/* Floating decorative leaves - top left */}
-      <div className="absolute top-32 left-8 md:left-20 pointer-events-none select-none hidden sm:block">
-        <FloatingDecor delay={0.2} amplitude={10}>
-          <TinyLeaf size={38} color="#A8B99A" className="opacity-70" />
-        </FloatingDecor>
-      </div>
-      <div className="absolute top-52 left-16 md:left-36 pointer-events-none select-none hidden sm:block">
-        <FloatingDecor delay={1.2} amplitude={8}>
-          <TinyLeaf size={24} color="#8BAD7A" className="opacity-50" />
-        </FloatingDecor>
-      </div>
-      {/* Top right */}
-      <div className="absolute top-28 right-10 md:right-24 pointer-events-none select-none hidden sm:block">
-        <FloatingDecor delay={0.7} amplitude={12}>
-          <TinyFlower size={32} petalColor="#F2D58A" />
-        </FloatingDecor>
-      </div>
-      <div className="absolute top-48 right-6 md:right-16 pointer-events-none select-none hidden md:block">
-        <FloatingDecor delay={1.8} amplitude={9}>
-          <TinyLeaf size={28} color="#A8B99A" className="opacity-60 -rotate-45" />
-        </FloatingDecor>
-      </div>
-
-      {/* Main hero content */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full px-6 lg:px-10 pt-28 pb-0 flex flex-col lg:flex-row items-center gap-8 lg:gap-4 min-h-screen">
-        {/* Left: Text content */}
-        <motion.div
-          style={{ y: textY }}
-          className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left lg:max-w-[52%] pt-8 lg:pt-0"
-        >
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F2D58A]/40 border border-[#F2D58A]/60 mb-6"
-          >
-            <span className="w-2 h-2 rounded-full bg-[#E9A18A] animate-pulse" />
-            <span className="text-[13px] font-semibold text-[#8B7355] tracking-wide uppercase">Exploratory Studio for Toddlers</span>
-          </motion.div>
-
-          {/* Main headline */}
-          <div className="overflow-hidden mb-4">
-            <motion.h1
-              initial={{ y: '100%' }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-              className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-[#3D2F1F] leading-[1.05] tracking-tight"
-            >
-              Little hands.
-              <br />
-              <em className="text-[#B9A17D] not-italic">Big</em> discoveries.
-              <br />
-              Endless possibilities.
-            </motion.h1>
-          </div>
-
-          {/* Subheading */}
+      <div className="relative z-10 mx-auto grid min-h-[100svh] w-full max-w-7xl items-center gap-12 px-6 pb-28 pt-28 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:pb-32">
+        {/* ── Left: content ── */}
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
           <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.75 }}
-            className="text-lg sm:text-xl text-[#8B7355] leading-relaxed max-w-lg mt-3 mb-8"
+            {...enter(0.1, 8)}
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#D8C9AD] bg-white/70 px-4 py-1.5 text-sm font-medium text-[#6F5B40]"
           >
-            A space where curiosity leads the way, imagination takes flight, and every little discovery becomes a big adventure.
+            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[#E9A18A]" />
+            Exploratory studio for toddlers
           </motion.p>
 
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.95 }}
-            className="flex flex-col sm:flex-row items-center gap-4"
+          <h1
+            id="hero-heading"
+            className="font-display text-5xl font-bold leading-[1.06] tracking-tight sm:text-6xl xl:text-7xl"
           >
-            <motion.button
-              whileHover={{ scale: 1.04, y: -2 }}
-              whileTap={{ scale: 0.96 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-              onClick={() => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-4 bg-[#3D2F1F] text-[#F9F6EF] font-semibold text-base rounded-full shadow-lg hover:shadow-xl hover:bg-[#2D1F0F] transition-all duration-300 cursor-pointer"
+            {HEADLINE.map((line, i) => (
+              <span key={line.text} className="block overflow-hidden pb-1">
+                <motion.span
+                  className={`block ${line.accent ? 'text-[#9A7B4F]' : 'text-[#3D2F1F]'}`}
+                  {...(reduceMotion
+                    ? {}
+                    : {
+                        initial: { y: '105%' },
+                        animate: { y: 0 },
+                        transition: { duration: 0.85, delay: 0.2 + i * 0.12, ease: EASE },
+                      })}
+                >
+                  {line.text}
+                </motion.span>
+              </span>
+            ))}
+          </h1>
+
+          <motion.p
+            {...enter(0.7)}
+            className="mt-6 max-w-[34rem] text-lg leading-relaxed text-[#6F5B40] sm:text-xl"
+          >
+            A space where curiosity leads the way, imagination takes flight, and every little
+            discovery becomes a big adventure.
+          </motion.p>
+
+          <motion.div
+            {...enter(0.85)}
+            className="mt-9 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:gap-4"
+          >
+            <a
+              href="mailto:hello@rocktumblerz.com?subject=Book a visit"
+              className="inline-flex w-full items-center justify-center rounded-full bg-[#3D2F1F] px-8 py-3.5 text-base font-semibold text-[#F9F6EF] shadow-sm transition-colors duration-200 hover:bg-[#2A1F13] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3D2F1F] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F9F6EF] sm:w-auto"
             >
-              Explore Our World
-            </motion.button>
-            <motion.a
-              href="mailto:hello@rocktumblerz.com?subject=Book a Visit"
-              whileHover={{ scale: 1.04, y: -2 }}
-              whileTap={{ scale: 0.96 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-              className="px-8 py-4 bg-[#E9A18A] text-white font-semibold text-base rounded-full shadow-md hover:shadow-lg hover:bg-[#D98070] transition-all duration-300"
+              Book a visit
+            </a>
+            <a
+              href="#about"
+              onClick={(e) => {
+                const target = document.querySelector('#about');
+                if (target) {
+                  e.preventDefault();
+                  target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+                }
+              }}
+              className="inline-flex w-full items-center justify-center rounded-full border border-[#3D2F1F]/25 bg-transparent px-8 py-3.5 text-base font-semibold text-[#3D2F1F] transition-colors duration-200 hover:border-[#3D2F1F]/60 hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3D2F1F] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F9F6EF] sm:w-auto"
             >
-              Book a Visit
-            </motion.a>
+              Explore our studio
+            </a>
           </motion.div>
 
-          {/* Scroll indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.8 }}
-            style={{ opacity }}
-            className="mt-12 hidden lg:flex items-center gap-3 text-[#B9A17D]"
+          <motion.ul
+            {...enter(1.0, 0)}
+            aria-label="What we value"
+            className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[15px] font-medium text-[#6F5B40] lg:justify-start"
           >
-            <motion.div
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              className="w-6 h-9 border-2 border-[#B9A17D]/50 rounded-full flex items-start justify-center pt-1"
-            >
-              <div className="w-1.5 h-1.5 bg-[#B9A17D] rounded-full" />
-            </motion.div>
-            <span className="text-sm font-medium opacity-70">Scroll to explore</span>
-          </motion.div>
-        </motion.div>
-
-        {/* Right: Illustration */}
-        <motion.div
-          style={{ y: illustrationY }}
-          className="flex-1 relative flex items-end justify-center lg:justify-end min-h-[340px] sm:min-h-[460px] lg:min-h-[560px] w-full lg:w-auto"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
+            {VALUES.map((value, i) => (
+              <li key={value} className="flex items-center gap-6">
+                {value}
+                {i < VALUES.length - 1 && (
+                  <span aria-hidden="true" className="hidden h-4 w-px bg-[#D8C9AD] sm:block" />
+                )}
+              </li>
+            ))}
+          </motion.ul>
+        </div>
+                  
+        {/* Right: Image */}
+        <motion.figure
+          {...(reduceMotion
+            ? {}
+            : {
+                initial: { opacity: 0, scale: 0.97 },
+                animate: { opacity: 1, scale: 1 },
+                transition: {
+                  duration: 1,
+                  delay: 0.35,
+                  ease: EASE,
+                },
+              })}
+          className="mx-auto w-full max-w-xl lg:max-w-none"
         >
-          {/* Subtle glow behind illustration */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-80 h-80 rounded-full bg-[#F2D58A]/20 blur-3xl" />
-          </div>
-
-          <HeroIllustration className="relative z-10 w-full max-w-[520px] lg:max-w-none lg:w-[580px] xl:w-[640px] drop-shadow-sm" />
-        </motion.div>
+          <motion.div
+            style={{ y: imageY }}
+            className="relative w-full"
+          >
+            <img
+              src="/assets/child-hero-img.png"
+              alt="Handcrafted smiling pebble, turtle and elephant characters surrounded by nature"
+              className="block h-auto w-full object-contain rounded-[20%]"
+              loading="eager"
+              fetchPriority="high"
+            />
+          </motion.div>
+           <figcaption className="mx-auto mt-8 max-w-sm text-center font-display text-lg italic leading-snug text-[#3D2F1F] lg:text-left">
+                    Protecting the extraordinary experience of being little.
+            </figcaption>
+        </motion.figure>
+            
       </div>
 
-      {/* Wavy bottom edge */}
-      <div className="relative z-10 w-full overflow-hidden -mt-4" style={{ height: 60 }}>
-        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" className="w-full h-full" fill="#F5F0E7">
-          <path d="M0,40 C240,65 480,20 720,40 C960,60 1200,20 1440,40 L1440,60 L0,60 Z" />
+      {/* Static divider into the next section */}
+      <div aria-hidden="true" className="absolute inset-x-0 bottom-0 z-20 h-[60px] leading-[0]">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" className="h-full w-full" fill="#F5F0E7">
+          <path d="M0,36 C240,60 480,12 720,32 C960,52 1200,16 1440,34 L1440,60 L0,60 Z" />
         </svg>
       </div>
     </section>

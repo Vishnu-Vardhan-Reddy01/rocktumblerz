@@ -112,7 +112,7 @@ export default function Footer() {
             <div>
               <h4 className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#8B7355] mb-5">Find Us</h4>
               <div className="space-y-3 text-[15px] text-[#B9A17D]">
-                <p>123 Studio Lane<br />Your City, ST 00000</p>
+                <p>Nanakramguda<br /> Hyderabad, India</p>
                 <a href="mailto:hello@rocktumblerz.com" className="block hover:text-[#F9F6EF] transition-colors duration-200">
                   hello@rocktumblerz.com
                 </a>

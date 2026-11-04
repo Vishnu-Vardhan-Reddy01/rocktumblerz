@@ -2,14 +2,14 @@ import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
 import { PhilosophyIllustration } from '../components/Illustrations';
 
-function FadeIn({ children, delay = 0, direction = "up", className = "" }) {
+function FadeIn({ children, delay = 0, direction = 'up', className = '' }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const inView = useInView(ref, { once: true, margin: '-50px' });
   const initMap = {
-    up: { opacity: 0, y: 40 },
-    left: { opacity: 0, x: -40 },
-    right: { opacity: 0, x: 40 },
-    scale: { opacity: 0, scale: 0.9 },
+    up:    { opacity: 0, y: 28 },
+    left:  { opacity: 0, x: -28 },
+    right: { opacity: 0, x: 28 },
+    scale: { opacity: 0, scale: 0.94 },
   };
   const initial = initMap[direction] || initMap.up;
   return (
@@ -17,7 +17,7 @@ function FadeIn({ children, delay = 0, direction = "up", className = "" }) {
       ref={ref}
       initial={initial}
       animate={inView ? { opacity: 1, y: 0, x: 0, scale: 1 } : {}}
-      transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay }}
+      transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay }}
       className={className}
     >
       {children}
@@ -29,135 +29,171 @@ const pillars = [
   {
     type: 'explore',
     word: 'Explore',
-    tagline: 'The world is endlessly curious to a toddler.',
-    body: "We create spaces and moments that invite children to look, touch, smell and investigate. Exploration is the first act of learning.",
+    tagline: 'The world is endlessly curious.',
+    body: 'We create spaces that invite children to look, touch, smell and investigate. Exploration is the first act of learning.',
     color: '#F2D58A',
     textColor: '#8B7355',
-    bg: '#FEFAF0',
+    bg: 'rgba(242,213,138,0.12)',
+    dot: '#E8C060',
     num: '01',
   },
   {
     type: 'discover',
     word: 'Discover',
-    tagline: "Every 'what is this?' is a small miracle.",
-    body: "Discovery happens when we least expect it. When a child turns a pebble over and finds a tiny hidden world underneath — that moment of wonder is everything.",
+    tagline: "Every 'what is this?' is a miracle.",
+    body: 'Discovery happens when we least expect it — when a child turns a pebble over and finds a tiny hidden world underneath.',
     color: '#A8B99A',
     textColor: '#3D6B3E',
-    bg: '#F3F7F0',
+    bg: 'rgba(168,185,154,0.12)',
+    dot: '#7A9E6A',
     num: '02',
   },
   {
     type: 'create',
     word: 'Create',
     tagline: 'Making something from nothing is magic.',
-    body: "Clay, water, sand, leaves and paint — we put real materials in little hands and stand back. What they create is never expected and always extraordinary.",
+    body: 'Clay, water, sand, leaves and paint — we put real materials in little hands and step back to watch the extraordinary unfold.',
     color: '#E9A18A',
     textColor: '#7A3B2E',
-    bg: '#FDF5F2',
+    bg: 'rgba(233,161,138,0.12)',
+    dot: '#D08070',
     num: '03',
   },
   {
     type: 'grow',
     word: 'Grow',
     tagline: 'Quietly, gently, naturally.',
-    body: "Children grow through play. Every experience — every texture felt, every experiment run, every mess made — builds something lasting inside a child.",
+    body: 'Every texture felt, every experiment run, every mess made — these moments build something deep and lasting inside a child.',
     color: '#B9A17D',
     textColor: '#5B4520',
-    bg: '#F7F4EE',
+    bg: 'rgba(185,161,125,0.12)',
+    dot: '#9A8060',
     num: '04',
   },
 ];
 
 export default function PhilosophySection() {
   return (
-    <section id="philosophy" className="bg-[#F9F6EF] py-24 lg:py-36 relative overflow-hidden">
-      {/* Background decorative */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <svg viewBox="0 0 1200 800" className="absolute -top-20 -left-40 w-[600px] opacity-[0.03]" fill="#3D2F1F">
-          <circle cx="300" cy="300" r="280" />
-        </svg>
-        <svg viewBox="0 0 1200 800" className="absolute -bottom-20 -right-40 w-[500px] opacity-[0.03]" fill="#3D2F1F">
-          <circle cx="300" cy="300" r="280" />
-        </svg>
-      </div>
+    <section id="philosophy" className="bg-[#F9F6EF] py-20 lg:py-28 relative overflow-hidden">
+      {/* Subtle ambient blobs */}
+      <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#F2D58A]/10 blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-[#A8B99A]/10 blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
-        {/* Section header */}
-        <div className="text-center mb-20 lg:mb-28">
+      <div className="max-w-6xl mx-auto px-6 lg:px-10 relative z-10">
+
+        {/* ── Section label + headline ── */}
+        <div className="text-center mb-14 lg:mb-18">
           <FadeIn delay={0}>
-            <span className="inline-block text-[11px] font-bold tracking-[0.25em] uppercase text-[#B9A17D] mb-4">
+            <span className="inline-block text-[10px] font-bold tracking-[0.3em] uppercase text-[#B9A17D] mb-3">
               How Children Learn
             </span>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-[#3D2F1F] leading-tight max-w-2xl mx-auto">
-              Our philosophy, in four beautiful words.
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[#3D2F1F] leading-tight">
+              Our philosophy, in four words.
             </h2>
           </FadeIn>
         </div>
 
-        {/* Pillar blocks — organic alternating layout */}
-        <div className="space-y-14 lg:space-y-20">
-          {pillars.map((p, i) => {
-            const isEven = i % 2 === 0;
-            return (
-              <FadeIn key={p.type} delay={0.08 * i} direction={isEven ? 'left' : 'right'}>
-                <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 lg:gap-16 items-center`}>
-                  {/* Illustration block */}
-                  <motion.div
-                    whileHover={{ scale: 1.03, rotate: isEven ? 2 : -2 }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                    className="flex-shrink-0 w-48 h-48 lg:w-60 lg:h-60 rounded-[40px] flex items-center justify-center shadow-md relative"
-                    style={{ background: p.bg, border: `2px solid ${p.color}40` }}
-                  >
-                    <PhilosophyIllustration type={p.type} size={120} />
-                    {/* Number badge */}
+        {/* ── 2-column card grid ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-6">
+          {pillars.map((p, i) => (
+            <FadeIn key={p.type} delay={i * 0.08} direction="up">
+              <motion.div
+                whileHover={{ y: -4, boxShadow: `0 16px 40px ${p.color}25` }}
+                transition={{ type: 'spring', stiffness: 350, damping: 22 }}
+                className="relative rounded-2xl p-6 lg:p-8 border border-white/60 bg-white/50 backdrop-blur-sm overflow-hidden group cursor-default"
+              >
+                {/* Soft color wash behind card */}
+                <div
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ background: p.bg }}
+                />
+
+                {/* Top row: number + icon */}
+                <div className="relative z-10 flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    {/* Step number pill */}
                     <div
-                      className="absolute -top-3 -right-3 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold font-display shadow-sm"
+                      className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold shadow-sm"
                       style={{ background: p.color, color: p.textColor }}
                     >
                       {p.num}
                     </div>
-                  </motion.div>
-
-                  {/* Text content */}
-                  <div className="flex-1 text-center lg:text-left">
-                    <h3
-                      className="font-display text-6xl sm:text-7xl lg:text-8xl font-bold leading-none mb-3 tracking-tight"
-                      style={{ color: p.color }}
-                    >
-                      {p.word}
-                    </h3>
-                    <p
-                      className="text-xl sm:text-2xl font-medium mb-4"
-                      style={{ color: p.textColor }}
-                    >
-                      {p.tagline}
-                    </p>
-                    <p className="text-base lg:text-lg text-[#6B5B3E] leading-relaxed max-w-xl">
-                      {p.body}
-                    </p>
-                    {/* Organic divider */}
-                    <div className="mt-6 flex gap-2 justify-center lg:justify-start">
-                      {[0, 1, 2].map(j => (
+                    {/* Pebble dots */}
+                    <div className="flex gap-1 items-center">
+                      {[1, 0.65, 0.35].map((op, j) => (
                         <div
                           key={j}
                           className="rounded-full"
-                          style={{
-                            width: 8 + j * 4,
-                            height: 8,
-                            background: p.color,
-                            opacity: 1 - j * 0.2,
-                          }}
+                          style={{ width: 7 - j, height: 7 - j, background: p.dot, opacity: op }}
                         />
                       ))}
                     </div>
                   </div>
+
+                  {/* Mini illustration */}
+                  <motion.div
+                    whileHover={{ rotate: 8, scale: 1.1 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+                    className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ background: p.bg, border: `1.5px solid ${p.color}50` }}
+                  >
+                    <PhilosophyIllustration type={p.type} size={44} />
+                  </motion.div>
                 </div>
-              </FadeIn>
-            );
-          })}
+
+                {/* Word — medium size, expressive */}
+                <div className="relative z-10 mb-1">
+                  <h3
+                    className="font-display text-4xl sm:text-5xl font-bold leading-none tracking-tight"
+                    style={{ color: p.color }}
+                  >
+                    {p.word}
+                  </h3>
+                </div>
+
+                {/* Tagline */}
+                <p
+                  className="relative z-10 text-[13px] font-semibold mb-3 leading-snug"
+                  style={{ color: p.textColor }}
+                >
+                  {p.tagline}
+                </p>
+
+                {/* Body */}
+                <p className="relative z-10 text-[13.5px] text-[#6B5B3E] leading-relaxed">
+                  {p.body}
+                </p>
+
+                {/* Hover accent bar at bottom */}
+                <motion.div
+                  className="absolute bottom-0 left-0 h-0.5 rounded-full"
+                  style={{ background: `linear-gradient(90deg, ${p.color}, transparent)` }}
+                  initial={{ width: 0 }}
+                  whileHover={{ width: '100%' }}
+                  transition={{ duration: 0.5 }}
+                />
+              </motion.div>
+            </FadeIn>
+          ))}
         </div>
+
+        {/* ── Central quote ── */}
+        <FadeIn delay={0.2} className="mt-14">
+          <div className="relative text-center max-w-xl mx-auto py-8 px-6">
+            {/* Quote mark */}
+            <div className="text-7xl font-display text-[#D8C9AD]/50 leading-none absolute -top-2 left-4 pointer-events-none select-none">"</div>
+            <p className="font-display text-xl sm:text-2xl font-medium text-[#3D2F1F] leading-snug relative z-10">
+              We don't rush the magic. We let it unfold — one pebble, one discovery, one tiny adventure at a time.
+            </p>
+            <div className="mt-5 flex justify-center items-center gap-3">
+              <div className="h-px w-10 bg-[#D8C9AD]" />
+              <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#B9A17D]">Rock Tumblerz</span>
+              <div className="h-px w-10 bg-[#D8C9AD]" />
+            </div>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );

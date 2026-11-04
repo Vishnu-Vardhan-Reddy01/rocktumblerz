@@ -68,7 +68,14 @@ export default function CTASection() {
             animate={{ y: [0, -6, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           >
-            <FinalCTAScene width={560} height={220} className="w-full max-w-xl drop-shadow-sm" />
+            {/* <FinalCTAScene width={560} height={220} className="w-full max-w-xl drop-shadow-sm" /> */}
+            <img
+              src="/assets/hero-section-img.png"
+              alt="Handcrafted smiling pebble, turtle and elephant characters surrounded by nature"
+              className="block h-[220px] w-full object-contain rounded-[20%]"
+              loading="eager"
+              fetchPriority="high"
+            />
           </motion.div>
         </FadeIn>
 
@@ -128,7 +135,7 @@ export default function CTASection() {
               <path d="M10 2a6 6 0 0 1 6 6c0 4-6 10-6 10S4 12 4 8a6 6 0 0 1 6-6z" stroke="currentColor" strokeWidth="1.5" />
               <circle cx="10" cy="8" r="2" stroke="currentColor" strokeWidth="1.5" />
             </svg>
-            123 Studio Lane, Your City
+            Nanakramguda, Hyderabad, India
           </span>
         </FadeIn>
       </div>

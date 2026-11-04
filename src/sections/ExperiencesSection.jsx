@@ -175,64 +175,69 @@ const experiences = [
 
 function ExperienceCard({ exp, index }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
+  const inView = useInView(ref, { once: true, margin: '-50px' });
   const [hovered, setHovered] = useState(false);
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 32 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: index * 0.1 }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: index * 0.09 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="group relative flex flex-col rounded-[28px] overflow-hidden cursor-default"
-      style={{ background: exp.bg, border: `1.5px solid ${exp.color}40` }}
+      className="group relative rounded-2xl overflow-hidden cursor-default"
+      style={{ background: exp.bg, border: `1.5px solid ${exp.color}35` }}
     >
       <motion.div
-        animate={{ scale: hovered ? 1.02 : 1 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-        className="p-8"
+        whileHover={{ y: -4, boxShadow: `0 16px 40px ${exp.color}28` }}
+        transition={{ type: 'spring', stiffness: 350, damping: 22 }}
+        className="p-6 h-full"
       >
-        {/* Icon */}
-        <motion.div
-          animate={{ rotate: hovered ? 5 : 0, scale: hovered ? 1.05 : 1 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-          className="w-20 h-20 mb-6"
-        >
-          <ExperienceIcon type={exp.type} />
-        </motion.div>
-
-        {/* Tag */}
-        <div
-          className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold tracking-widest uppercase mb-3"
-          style={{ background: exp.color + '30', color: exp.accent }}
-        >
-          {exp.tagline}
+        {/* Top row */}
+        <div className="flex items-start justify-between mb-4">
+          <motion.div
+            animate={{ rotate: hovered ? 8 : 0, scale: hovered ? 1.08 : 1 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 16 }}
+            className="w-14 h-14"
+          >
+            <ExperienceIcon type={exp.type} />
+          </motion.div>
+          <div
+            className="text-[10px] font-bold tracking-[0.18em] uppercase px-2.5 py-1 rounded-full"
+            style={{ background: exp.color + '28', color: exp.accent }}
+          >
+            {exp.tagline}
+          </div>
         </div>
 
-        <h3 className="font-display text-xl font-bold text-[#3D2F1F] mb-2">{exp.title}</h3>
-        <p className="text-[14px] text-[#6B5B3E] leading-relaxed">{exp.description}</p>
+        <h3 className="font-display text-[17px] font-bold text-[#3D2F1F] mb-2 leading-snug">{exp.title}</h3>
+        <p className="text-[13px] text-[#6B5B3E] leading-relaxed">{exp.description}</p>
 
-        {/* Bottom pebble dots */}
+        {/* Animated pebble trail */}
         <motion.div
-          animate={{ x: hovered ? 4 : 0 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-          className="mt-6 flex gap-2 items-center"
+          animate={{ x: hovered ? 5 : 0 }}
+          transition={{ type: 'spring', stiffness: 300 }}
+          className="mt-5 flex gap-1.5 items-center"
         >
-          {[0, 1, 2].map(j => (
-            <div
+          {[9, 6, 4].map((w, j) => (
+            <motion.div
               key={j}
-              className="rounded-full transition-all duration-300"
-              style={{
-                width: hovered ? 10 + j * 3 : 8 + j * 2,
-                height: 8,
-                background: exp.color,
-                opacity: 1 - j * 0.2,
-              }}
+              animate={{ opacity: hovered ? 1 - j * 0.15 : 1 - j * 0.25 }}
+              className="rounded-full"
+              style={{ width: w, height: w * 0.65, background: exp.color }}
             />
           ))}
         </motion.div>
+
+        {/* Hover bar */}
+        <motion.div
+          className="absolute bottom-0 left-0 h-[2.5px]"
+          style={{ background: exp.color }}
+          initial={{ width: 0 }}
+          animate={{ width: hovered ? '100%' : 0 }}
+          transition={{ duration: 0.45 }}
+        />
       </motion.div>
     </motion.div>
   );
@@ -240,27 +245,27 @@ function ExperienceCard({ exp, index }) {
 
 export default function ExperiencesSection() {
   return (
-    <section id="experiences" className="bg-[#F5F0E7] py-24 lg:py-36 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="text-center mb-16 lg:mb-24">
+    <section id="experiences" className="bg-[#F5F0E7] py-20 lg:py-28 relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6 lg:px-10">
+        <div className="text-center mb-12 lg:mb-16">
           <FadeIn delay={0}>
-            <span className="inline-block text-[11px] font-bold tracking-[0.25em] uppercase text-[#B9A17D] mb-4">
+            <span className="inline-block text-[10px] font-bold tracking-[0.3em] uppercase text-[#B9A17D] mb-3">
               Our Experiences
             </span>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-[#3D2F1F] leading-tight max-w-2xl mx-auto">
-              Every day is filled with something wonderful.
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[#3D2F1F] leading-tight max-w-xl mx-auto">
+              Every day holds something wonderful.
             </h2>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <p className="mt-4 text-lg text-[#8B7355] max-w-xl mx-auto">
-              Our studio offers a rich variety of experiences, all designed to nourish curiosity and imagination.
+            <p className="mt-3 text-[15px] text-[#8B7355] max-w-md mx-auto leading-relaxed">
+              A rich variety of studio experiences, all designed to nourish curiosity and imagination.
             </p>
           </FadeIn>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
           {experiences.map((exp, i) => (
             <ExperienceCard key={exp.id} exp={exp} index={i} />
           ))}

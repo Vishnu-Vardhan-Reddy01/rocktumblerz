@@ -212,10 +212,14 @@ export default function DaySection() {
         {/* Timeline */}
         <div className="relative">
           {/* Organic center path line */}
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2">
-            <svg className="w-full h-full" viewBox="0 0 4 100%" preserveAspectRatio="none">
+          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2 pointer-events-none">
+            <svg
+              className="w-full h-full overflow-visible"
+              viewBox="0 0 4 1000"
+              preserveAspectRatio="none"
+            >
               <path
-                d="M2 0 Q0 20 2 40 Q4 60 2 80 Q0 90 2 100%"
+                d="M2 0 Q0 200 2 400 Q4 600 2 800 Q0 900 2 1000"
                 stroke="#D8C9AD"
                 strokeWidth="2"
                 strokeDasharray="6 4"
@@ -261,11 +265,10 @@ export default function DaySection() {
                   </div>
                 </FadeIn>
               );
-            })}
+            })}¥
           </div>
         </div>
       </div>
     </section>
   );
 }
-

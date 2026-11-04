@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 
 const navLinks = [
   { label: 'Home', href: '#home' },
@@ -13,7 +13,7 @@ const navLinks = [
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  // const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -91,7 +91,7 @@ export default function Navigation() {
           <div className="flex items-center gap-4">
             <motion.a
               href="mailto:hello@rocktumblerz.com?subject=Book a Visit"
-              className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 bg-[#E9A18A] text-white font-semibold text-sm rounded-full shadow-sm hover:bg-[#D98070] hover:shadow-md transition-all duration-300"
+              className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 bg-[#D98070] text-white font-semibold text-sm rounded-full shadow-sm hover:bg-[#E9A18A] hover:shadow-md transition-all duration-300"
               whileHover={{ scale: 1.04, y: -1 }}
               whileTap={{ scale: 0.97 }}
               transition={{ type: 'spring', stiffness: 400 }}
