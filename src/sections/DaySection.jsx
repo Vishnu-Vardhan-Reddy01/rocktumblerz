@@ -182,7 +182,6 @@ const timelineItems = [
 
 export default function DaySection() {
   const sectionRef = useRef(null);
-  const inView = useInView(sectionRef, { once: true, margin: "-80px" });
 
   return (
     <section id="day" ref={sectionRef} className="bg-[#F9F6EF] py-24 lg:py-36 relative overflow-hidden">

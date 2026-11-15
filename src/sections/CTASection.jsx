@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
-import { FinalCTAScene, TinyLeaf, TinyFlower } from '../components/Illustrations';
+import { TinyLeaf, TinyFlower } from '../components/Illustrations';
 
 function FadeIn({ children, delay = 0, className = "" }) {
   const ref = useRef(null);
